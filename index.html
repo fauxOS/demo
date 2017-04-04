@@ -1,25 +1,30 @@
 <html>
   <head>
-    <title>FauxOS Demo</title>
+    <title>Faux OS Demo</title>
+
     <!--- Record initiation load time for the script -->
     <script>console.time("Initiation Time")</script>
-      <script src="https://rawgit.com/fauxOS/fauxOS/master/dist/fauxOS.js"></script>
+      <script src="https://rawgit.com/fauxOS/faux/master/dist/fauxOS.js"></script>
     <script>console.timeEnd("Initiation Time")</script>
+
     <!--- Print a nice welcome banner -->
- <script>
+    <script>
 console.log("%cWelcome to Faux OS - Licensed MIT - view the project at https://git.io/faux\n\
 Written by Daniel Ethridge | https://git.io/de\n"
+
 +
 "%c               ____                   ____   ____\n              \/ __\/___ _ __ ____ __  \/ __ \\ \/ __\/\n             \/ _\/ \/ _ `\/\/ \/\/ \/\\ \\ \/ \/ \/_\/ \/_\\ \\\n            \/_\/   \\_,_\/ \\_,_\/\/_\\_\\  \\____\/\/___\/\n\n"
 +
-`%cThere isn't much to do in the top-level window, which holds the kernel: window.faux
+`%c
+
 Try changing your javascript debugger's context to one of the web workers.
 In this way, you can run code relative to a sandboxed faux process.
 
 Try this (userspace only) - open("/some/file").then(read).then(console.log);
 `, "color: #657575", "font-size: 1.25em; color: #151515", "color: #657575");
 console.log(faux);
-</script>
+   </script>
+
   </head>
   <body>
     <div id="console">
