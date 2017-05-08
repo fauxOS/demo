@@ -1,33 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
   <head>
+    <meta charset="utf-8">
+    <script src="https://unpkg.com/faux@latest/dist/fauxOS.min.js"></script>
     <title>Faux OS Demo</title>
-
-    <!--- Record initiation load time for the script -->
-    <script>console.time("Initiation Time")</script>
-      <script src="https://rawgit.com/fauxOS/faux/master/dist/fauxOS.js"></script>
-    <script>console.timeEnd("Initiation Time")</script>
-
-    <!--- Print a nice welcome banner -->
-    <script>
-console.log("%cWelcome to Faux OS - Licensed MIT - view the project at https://git.io/faux\n\
-Written by Daniel Ethridge | https://git.io/de\n"
-
-+
-"%c               ____                   ____   ____\n              \/ __\/___ _ __ ____ __  \/ __ \\ \/ __\/\n             \/ _\/ \/ _ `\/\/ \/\/ \/\\ \\ \/ \/ \/_\/ \/_\\ \\\n            \/_\/   \\_,_\/ \\_,_\/\/_\\_\\  \\____\/\/___\/\n\n"
-+
-`%c
-
-Try changing your javascript debugger's context to one of the web workers.
-In this way, you can run code relative to a sandboxed faux process.
-
-Try this (userspace only) - open("/some/file").then(read).then(console.log);
-`, "color: #657575", "font-size: 1.25em; color: #151515", "color: #657575");
-console.log(faux);
-   </script>
-
   </head>
   <body>
-    <div id="console">
-    </div>
+    <div id="app"></div>
+    <script src="/dist/build.js"></script>
   </body>
 </html>
