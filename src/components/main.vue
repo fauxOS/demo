@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    <console-line></console-line>
   </div>
 </template>
 
 <script>
+import ConsoleLine from "./line.vue";
+
 export default {
   name: "app",
   data() {
     return {
       msg: "Faux OS Demo"
     }
+  },
+  components: {
+    ConsoleLine
   }
 }
 </script>
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  font-family: dejavu sans mono, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: rgb(48, 57, 66);
 }
 
 a {
