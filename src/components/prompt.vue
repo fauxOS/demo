@@ -1,5 +1,7 @@
 <template>
-  <span class="prompt">{{ prompt }}</span>
+  <span class="prompt">
+    <span class="name">{{ name }}</span><span class="colon">:</span><span class="cwd">{{ cwd }}</span><span class="symbol">{{ symbol }}</span>
+  </span>
 </template>
 
 <script>
@@ -7,7 +9,9 @@ export default {
   name: "prompt",
   data() {
     return {
-      prompt: "faux:/#"
+      name: "faux",
+      cwd: "/",
+      symbol: "#"
     }
   }
 }
@@ -15,8 +19,16 @@ export default {
 
 <style>
 .prompt {
-  font-size: 15px;
-  font-family: dejavu sans mono, monospace;
-  color: #808080
+  color: #fff;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.prompt > .name {
+  color: #4cff4c;
+}
+
+.prompt > .cwd {
+  color: #0059bb;
 }
 </style>

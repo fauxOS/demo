@@ -1,5 +1,5 @@
 <template>
-  <input v-model="input">
+  <span class="input" contenteditable="true" v-model="input"></span>
 </template>
 
 <script>
@@ -7,15 +7,19 @@ export default {
   name: "input",
   data() {
     return {
-      input: ""
+      input: " "
     }
   }
 }
 </script>
 
 <style>
-input {
-  font-size: 15px;
-  font-family: dejavu sans mono, monospace;
+.input {
+  width: 100%;
+  color: #dedede;
+  border: none;
+  outline: none;
+  display: inline-block;
+  height: 100%;
 }
 </style>

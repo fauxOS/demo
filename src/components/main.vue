@@ -10,9 +10,7 @@ import ConsoleLine from "./line.vue";
 export default {
   name: "app",
   data() {
-    return {
-      msg: "Faux OS Demo"
-    }
+    return {}
   },
   components: {
     ConsoleLine
@@ -21,15 +19,27 @@ export default {
 </script>
 
 <style>
+html body {
+  height: 100%;
+}
+
 #app {
-  font-size: 15px;
+  font-size: 17px;
   font-family: dejavu sans mono, monospace;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: rgb(48, 57, 66);
+  background-color: #101010;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  overflow: auto;
+  position: fixed;
+  flex: 1 1;
+  flex-direction: column;
 }
 
 a {
-  color: #42b983;
+  color: #8bb2ff;
 }
 </style>
