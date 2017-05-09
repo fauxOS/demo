@@ -1,9 +1,15 @@
 import Vue from "vue";
-import App from "./components/main.vue";
+import Console from "./components/main.vue";
 
-new Vue({
-  el: "#app",
-  render: h => h(App)
+window.cons = new Vue({
+  el: "#console",
+  render: h => h(Console)
+});
+
+// Click anywhere in the console to refocus the on input line
+cons.$el.addEventListener("click", () => {
+  // Select on the fly, because this element changes often
+  document.querySelector("#input").focus();
 });
 
 

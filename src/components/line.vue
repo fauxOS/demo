@@ -1,8 +1,8 @@
 <template>
-  <div class="line">
+  <span v-bind:class="line">
     <console-prompt></console-prompt>
     <console-input></console-input>
-  </div>
+  </span>
 </template>
 
 <script>
@@ -12,7 +12,9 @@ import ConsoleInput from "./input.vue";
 export default {
   name: "line",
   data() {
-    return {}
+    return {
+      line: "line"
+    }
   },
   components: {
     ConsolePrompt,
@@ -24,6 +26,18 @@ export default {
 <style>
 .line {
   word-break: break-all;
-  height: 100%;
+  display: inline-block;
+  color: #dedede;
+  padding: 1%;
+  width: 95%;
+  height: 95%;
+}
+.line-submitted {
+  word-break: break-all;
+  display: inline-block;
+  color: #dedede;
+  padding: 1%;
+  width: 95%;
+  height: auto;
 }
 </style>

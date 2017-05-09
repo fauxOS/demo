@@ -1,6 +1,6 @@
 <template>
   <span class="prompt">
-    <span class="name">{{ name }}</span><span class="colon">:</span><span class="cwd">{{ cwd }}</span><span class="symbol">{{ symbol }}</span>
+    <span class="name">{{ name }}</span><span>:</span><span class="cwd">{{ cwd }}</span><span>#</span>
   </span>
 </template>
 
@@ -10,8 +10,7 @@ export default {
   data() {
     return {
       name: "faux",
-      cwd: "/",
-      symbol: "#"
+      cwd: "/"
     }
   }
 }
