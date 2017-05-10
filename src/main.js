@@ -1,17 +1,10 @@
 import Vue from "vue";
 import Console from "./components/main.vue";
 
-window.cons = new Vue({
+new Vue({
   el: "#console",
   render: h => h(Console)
 });
-
-// Click anywhere in the console to refocus the on input line
-cons.$el.addEventListener("click", () => {
-  // Select on the fly, because this element changes often
-  document.querySelector("#input").focus();
-});
-
 
 // Pretty welcome banner
 console.log("%cWelcome to Faux OS - Licensed MIT - view the project at https://git.io/faux\n\
