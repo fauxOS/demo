@@ -26,9 +26,11 @@ export default {
       // Save history, write command to backend, reset
       if (key.keyCode == 13 && !key.shiftKey) {
         key.preventDefault();
-        this.historySave();
-        this.$parent.$parent.stdin = this.$el.innerHTML;
-        this.reset();
+        if (this.$el.innerHTML != "") {
+          this.historySave();
+          this.$parent.$parent.stdin = this.$el.innerHTML;
+          this.reset();
+        }
       }
       // Clear the screen
       if (key.ctrlKey && key.keyCode == 76) {
