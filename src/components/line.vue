@@ -2,6 +2,7 @@
   <span class="line" id="input-line">
     <console-prompt></console-prompt>
     <console-input></console-input>
+    <br>
   </span>
 </template>
 
