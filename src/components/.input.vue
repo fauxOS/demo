@@ -21,28 +21,6 @@ export default {
     }
   },
   methods: {
-    // Key down handler
-    capture(key) {
-      // Save history, write command to backend, reset
-      if (key.keyCode == 13 && !key.shiftKey) {
-        key.preventDefault();
-        if (this.$el.innerHTML != "") {
-          this.historySave();
-          this.$parent.$parent.stdin = this.$el.innerHTML;
-          this.reset();
-        }
-      }
-      // Clear the screen
-      if (key.ctrlKey && key.keyCode == 76) {
-        key.preventDefault();
-        this.$parent.$parent.clear();
-      }
-      // Scroll history up or down
-      if (key.keyCode == 38 || key.keyCode == 40) {
-        this.historyScroll(key);
-      }
-    },
-
     // Save the current line into the history array in the last slot
     historySave() {
       console.log("History saved at index " + this.historyLength + " : " + this.$el.innerHTML);

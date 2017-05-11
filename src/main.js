@@ -1,8 +1,8 @@
 import Vue from "vue";
-import Console from "./components/main.vue";
+import Console from "./components/Console.vue";
 
 new Vue({
-  el: "#console",
+  el: "#Console",
   render: h => h(Console)
 });
 
