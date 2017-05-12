@@ -6,6 +6,8 @@ new Vue({
   render: h => h(Console)
 });
 
+window.Console = document.querySelector("#Console").__vue__.$children[0];
+
 // Pretty welcome banner
 console.log("%cWelcome to Faux OS - Licensed MIT - view the project at https://git.io/faux\n\
 Written by Daniel Ethridge | https://git.io/de\n"

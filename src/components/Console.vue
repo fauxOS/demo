@@ -1,6 +1,7 @@
 <template>
-  <div id="Console" @keydown="capture">
+  <div id="Console" @click="focus">
     <console-line v-for="line in lines" :line="line" :key="line">{{ line }}</console-line>
+    <console-line v-if="inputActive" :input="inputActive"></console-line>
   </div>
 </template>
 
@@ -9,47 +10,42 @@ import ConsoleLine from "./ConsoleLine.vue";
 
 export default {
   name: "Console",
+  props: [],
   components: {
     ConsoleLine
   },
   data() {
+    self = this;
     return {
+      // Are we actively accepting user input?
+      inputActive: true,
       // Records of what the user wrote in the console, line by line
       history: [],
       // The innerHTML content of each line currently on-screen
-      lines: [" > echo hello world", "hello world"],
+      lines: [],
       // The backend's stdin that the console writes to
       set backend(text) {
         console.log("Sent command to backend : " + text);
       },
       // The console's stdin that the backend writes to
       set frontend(text) {
-        console.log("Text received from backend : " + text);
+        const newLines = text.split("\n");
+        // Append to last line, not to a new one
+        if (this.lines.length > 0) {
+          console.log(newLines)
+          this.lines[ this.lines.length - 1 ] += newLines[0];
+        } else {
+          this.lines.push(newLines[0]);
+        }
+        for (let i = 1; i < newLines.length; i++) {
+          this.lines.push( newLines[i] );
+        }
       }
     }
   },
   methods: {
-    // Key down handler
-    capture(key) {
-      // On enter, save history, write command to backend, reset
-      if (key.keyCode == 13 && !key.shiftKey) {
-        key.preventDefault();
-        if (this.$el.innerHTML != "") {
-          this.historySave();
-          this.stdin = this.$el.innerHTML;
-          this.reset();
-        }
-      }
-      // Clear the screen on ctrl + L
-      else if (key.ctrlKey && key.keyCode == 76) {
-        key.preventDefault();
-        this.lines = [];
-      }
-      // Scroll history up or down
-      else if (key.keyCode == 38 || key.keyCode == 40) {
-        key.preventDefault();
-        this.historyScroll(key);
-      }
+    focus() {
+      document.querySelector("#input").focus();
     }
   }
 }
