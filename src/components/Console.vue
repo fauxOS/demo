@@ -32,8 +32,8 @@ export default {
         const newLines = text.split("\n");
         // Append to last line, not to a new one
         if (this.lines.length > 0) {
-          console.log(newLines)
           this.lines[ this.lines.length - 1 ] += newLines[0];
+          self.$forceUpdate();
         } else {
           this.lines.push(newLines[0]);
         }
@@ -43,6 +43,7 @@ export default {
       }
     }
   },
+  computed: {},
   methods: {
     focus() {
       document.querySelector("#input").focus();

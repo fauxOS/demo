@@ -24,6 +24,7 @@ export default {
       historyLength: this.$parent.history.length
     }
   },
+  computed: {},
   methods: {
     // Key down handler
     capture(key) {
@@ -32,7 +33,10 @@ export default {
         key.preventDefault();
         if (this.$el.innerHTML != "") {
           this.historySave();
-          this.dataRefresh();
+          // Update history index and length
+          this.historyIndex = this.$parent.history.length;
+          this.historyLength = this.$parent.history.length;
+          // Send command to backend
           this.$parent.backend = this.userInput;
           this.replace();
         }
@@ -51,11 +55,6 @@ export default {
 
     historySave() {
       this.$parent.history[ this.historyLength ] = this.userInput;
-    },
-
-    dataRefresh() {
-      this.historyIndex = this.$parent.history.length;
-      this.historyLength = this.$parent.history.length;
     },
 
     // Scroll in history
