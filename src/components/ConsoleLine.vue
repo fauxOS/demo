@@ -1,5 +1,6 @@
 <template>
   <span class="console-line">
+    <console-prompt v-if="prompt" :name="name" :cwd="cwd"></console-prompt>
     {{ line }}
     <span class="input-container" v-if="input">
       <input id="input" autofocus @keydown="capture" v-model="userInput"
@@ -9,15 +10,21 @@
 </template>
 
 <script>
+import ConsolePrompt from "./ConsolePrompt.vue";
 
 export default {
   name: "ConsoleLine",
-  props: ["line", "input"],
-  components: {},
+  props: ["line", "input", "prompt"],
+  components: {
+    ConsolePrompt
+  },
   data() {
     return {
       // Where the user's input goes
       userInput: "",
+      // Prompt details
+      name: "faux",
+      cwd: "/",
       // The location in history that is in userInput
       historyIndex: this.$parent.history.length,
       // The location that we save the current userInput to
@@ -97,8 +104,7 @@ export default {
 }
 
 .input-container {
-  display: table;
-  width: 100%;
+  display: flex;
 }
 
 #input {
@@ -106,10 +112,9 @@ export default {
   border: none;
   outline: none;
   height: 100%;
+  width: 100%;
   background: inherit;
   font-size: inherit;
   font-family: inherit;
-  display: table-cell;
-  width: 100%;
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div id="Console" @click="focus">
     <console-line v-for="line in lines" :line="line" :key="line">{{ line }}</console-line>
-    <console-line v-if="inputActive" :input="inputActive"></console-line>
+    <console-line v-if="input" :input="input" :prompt="true"></console-line>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
     self = this;
     return {
       // Are we actively accepting user input?
-      inputActive: true,
+      input: true,
       // Records of what the user wrote in the console, line by line
       history: [],
       // The innerHTML content of each line currently on-screen

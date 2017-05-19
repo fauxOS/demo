@@ -7,10 +7,12 @@
 <script>
 export default {
   name: "prompt",
+  props: [
+    "name",
+    "cwd"
+  ],
   data() {
     return {
-      name: "faux",
-      cwd: "/"
     }
   }
 }
