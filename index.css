@@ -1,4 +1,12 @@
+html, body, #terminal {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
 .terminal {
+  font-family: Menlo, Monaco, Terminal, monospace;
+  color: #DEDEDE;
   position: fixed;
   top: 0;
   bottom: 0;
