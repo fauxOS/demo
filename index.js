@@ -57,13 +57,11 @@ const container = document.querySelector("#terminal");
 term.open(container, true);
 
 // Fit the terminal to the current window size
-term.fit()
+term.fit();
 // Fit the terminal geometry on every window resize
 addEventListener("resize", () => term.fit());
 
-// Relay key events to the console
-term.on("key", (key, e) => {
-  faux.console.send(key, e);
-});
+// Relay key events to faux's console
+term.on("key", key => faux.console.handle(key));
 // Allow the faux console to write to this terminal
-faux.console.write = str => term.write(str);
+faux.console.writeRaw = str => term.write(str);
