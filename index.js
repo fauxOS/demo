@@ -63,5 +63,10 @@ addEventListener("resize", () => term.fit());
 
 // Relay key events to faux's console
 term.on("key", key => faux.console.handle(key));
+term.on("paste", str => {
+  for (let i in str) {
+    faux.console.handle(str[i]);
+  }
+});
 // Allow the faux console to write to this terminal
 faux.console.writeRaw = str => term.write(str);
