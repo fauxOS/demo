@@ -1,54 +1,60 @@
 /*
- * This was taken from https://github.com/sourcelair/xterm.js/blob/master/src/addons/fit/fit.js
+ * This was taken from https://github.com/xtermjs/xterm.js/blob/master/src/addons/fit/fit.ts
  * Fit terminal columns and rows to the dimensions of its DOM element.
  *
  * Approach:
- * 
+ *
  *   - Rows: Truncate the division of the terminal parent element height by the terminal row height.
  *
  *   - Columns: Truncate the division of the terminal parent element width by the terminal character
  *   width (apply display: inline at the terminal row and truncate its width with the current
  *   number of columns).
  */
-Terminal.prototype.proposeGeometry = function() {
-  if (!this.element.parentElement) {
-    return;
+function proposeGeometry({ element, _core }) {
+  if (!element.parentElement) {
+    return null;
   }
-  const parentStyle = window.getComputedStyle(this.element.parentElement);
-  const parentHeight = parseInt(parentStyle.height);
-  const parentWidth = Math.max(0, parseInt(parentStyle.width) - 17);
+  const parentElementStyle = window.getComputedStyle(element.parentElement);
+  const parentElementHeight = parseInt(
+    parentElementStyle.getPropertyValue("height")
+  );
+  const parentElementWidth = Math.max(
+    0,
+    parseInt(parentElementStyle.getPropertyValue("width"))
+  );
+  const elementStyle = window.getComputedStyle(element);
+  const elementPadding = {
+    top: parseInt(elementStyle.getPropertyValue("padding-top")),
+    bottom: parseInt(elementStyle.getPropertyValue("padding-bottom")),
+    right: parseInt(elementStyle.getPropertyValue("padding-right")),
+    left: parseInt(elementStyle.getPropertyValue("padding-left"))
+  };
+  const elementPaddingVer = elementPadding.top + elementPadding.bottom;
+  const elementPaddingHor = elementPadding.right + elementPadding.left;
+  const availableHeight = parentElementHeight - elementPaddingVer;
+  const availableWidth =
+    parentElementWidth - elementPaddingHor - _core.viewport.scrollBarWidth;
+  const geometry = {
+    cols: Math.floor(
+      availableWidth / _core.renderer.dimensions.actualCellWidth
+    ),
+    rows: Math.floor(
+      availableHeight / _core.renderer.dimensions.actualCellHeight
+    )
+  };
+  return geometry;
+}
 
-  const elementStyle = window.getComputedStyle(this.element);
-  const elementPadHeight =
-    parseInt(elementStyle.paddingTop) + parseInt(elementStyle.paddingBottom);
-  const elementPadWidth =
-    parseInt(elementStyle.paddingRight) + parseInt(elementStyle.paddingLeft);
-
-  const availableHeight = parentHeight - elementPadHeight;
-  const availableWidth = parentWidth - elementPadWidth;
-
-  const subjectRow = this.rowContainer.firstElementChild;
-  const contentBuffer = subjectRow.innerHTML;
-  subjectRow.style.display = "inline";
-  subjectRow.innerHTML = "W"; // Common character for measuring width, although on monospace
-  const characterWidth = subjectRow.getBoundingClientRect().width;
-  subjectRow.style.display = ""; // Revert style before calculating height, since they differ.
-  const characterHeight = subjectRow.getBoundingClientRect().height;
-  subjectRow.innerHTML = contentBuffer;
-
-  // Round down
-  const rows = Math.floor(availableHeight / characterHeight);
-  const cols = Math.floor(availableWidth / characterWidth);
-
-  return { cols, rows };
-};
-
-Terminal.prototype.fit = function() {
-  const { cols, rows } = this.proposeGeometry();
-  if (cols && rows) {
-    this.resize(cols, rows);
+function fit(term) {
+  const geometry = proposeGeometry(term);
+  if (geometry) {
+    // Force a full render
+    if (term.rows !== geometry.rows || term.cols !== geometry.cols) {
+      term._core.renderer.clear();
+      term.resize(geometry.cols, geometry.rows);
+    }
   }
-};
+}
 
 // Open a new terminal in the #terminal div
 const term = new Terminal({});
@@ -57,16 +63,12 @@ const container = document.querySelector("#terminal");
 term.open(container, true);
 
 // Fit the terminal to the current window size
-term.fit();
+fit(term);
 // Fit the terminal geometry on every window resize
-addEventListener("resize", () => term.fit());
+addEventListener("resize", () => fit(term));
 
 // Relay key events to faux's console
 term.on("key", key => faux.console.handle(key));
-term.on("paste", str => {
-  for (let i in str) {
-    faux.console.handle(str[i]);
-  }
-});
+term.on("paste", str => str.map(faux.console.handle));
 // Allow the faux console to write to this terminal
 faux.console.writeRaw = str => term.write(str);
