@@ -67,9 +67,8 @@ fit(term);
 // Fit the terminal geometry on every window resize
 addEventListener("resize", () => fit(term));
 
-// Allow the faux console to write to this terminal
-faux.console = faux.console(str => term.write(str))
-
 // Relay key events to faux's console
-term.on("key", faux.console.handle);
-term.on("paste", str => Array.from(str).map(faux.console.handle));
+term.on("key", key => faux.console.handle(key));
+term.on("paste", str => Array.from(str).map(char => faux.console.handle(char)));
+// Allow the faux console to write to this terminal
+faux.console.writeRaw = str => term.write(str);
